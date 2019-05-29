@@ -1,4 +1,4 @@
-%define name    <%= name %> 
+%define name    <%= name %>
 %define version <%= version %>
 %define release <%= release %>
 %define _tmppath <%= tmppath %>
@@ -17,52 +17,57 @@ Summary: <%= summary %>
 
 Requires: <%= requires %>
 <% end %>
+
+<% if ( ! nodeps.empty?  )  %>
+AutoReqProv: no
+<% end %>
+
 %description
 <%= description %>
-%summary 
+%summary
 
- 
-%preun 
-<%= preun %> 
 
-%post 
+%preun
+<%= preun %>
+
+%post
 
 <%= post %>
 
-%postun 
+%postun
 
 <%= postun %>
 
-%pre 
+%pre
 
-<%= pre %>  
-%prep 
+<%= pre %>
+%prep
 
-umask 022 
+umask 022
 cd %{_topdir}/BUILD
 cd %{_topdir}/BUILD
 rm -rf %{name}-%{version}
 mkdir -p %{_topdir}/BUILD/%{name}-%{version}
 cd %{name}-%{version}
-tar  -xvzf %{_topdir}/SOURCES/%{source} 
-#exit 0 
+tar  -xvzf %{_topdir}/SOURCES/%{source}
+#exit 0
 #mkdir -p %{_topdir}/%{name}-%{version}
-#%setup  
+#%setup
 
 %build
 
 
-%install 
+%install
 rm -rf $RPM_BUILD_ROOT
 #tar -xvf  -C $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/
-umask 022 
+umask 022
 
 cp -rp %{_topdir}/BUILD/%name-%{version}/*  $RPM_BUILD_ROOT
 
-%clean 
+%clean
 
-test $RPM_BUILD_ROOT != / 
+test $RPM_BUILD_ROOT != /
 rm -rf $RPM_BUILD_ROOT
 
 %files
